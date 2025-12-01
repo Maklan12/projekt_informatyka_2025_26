@@ -1,0 +1,2 @@
+C:\Users\admin\Desktop\inf2025_26\winlibs-x86_64-posix-seh-gcc-14.2.0-mingw-w64ucrt-12.0.0-r2\mingw64\bin\g++ -c main.cpp -I"C:\Users\admin\Desktop\inf2025_26\SFML-3.0.2-windows-gcc-14.2.0-mingw-64-bit\SFML-3.0.2\include"
+C:\Users\admin\Desktop\inf2025_26\winlibs-x86_64-posix-seh-gcc-14.2.0-mingw-w64ucrt-12.0.0-r2\mingw64\bin\g++ main.o -o sfml-app -L"C:\Users\admin\Desktop\inf2025_26\SFML-3.0.2-windows-gcc-14.2.0-mingw-64-bit\SFML-3.0.2\lib" -lsfml-graphics -lsfml-window -lsfml-system
