@@ -23,7 +23,9 @@ public:
     float getX() const {return x;}
     float getY() const {return y;}
     float getSzerokosc() const {return szerokosc;}
-    float getWysokosc() const {return wysokosc;}    
+    float getWysokosc() const {return wysokosc;}
+    
+    void setPosition(float setX, float setY);
 };
 
 #endif

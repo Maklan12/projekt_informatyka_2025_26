@@ -16,6 +16,8 @@ public:
     void trafienie();
     void aktualizujKolor();
     bool isDestroyed() const{return m_jestZniszczony;}
+
+    int getHP() const { return m_punktyZycia; }
 };
 
 #endif

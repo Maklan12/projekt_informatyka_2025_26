@@ -5,6 +5,7 @@
 #include "Pilka.cpp"
 #include "Paletka.cpp"
 #include "Stone.cpp"
+#include "GameState.h"
 #include <vector>
 
 class Game
@@ -30,6 +31,9 @@ public:
     
     bool isGameOver() const { return m_gameOver; }
     void resetGame();
+
+    void saveGame(const std::string& filename);
+    bool loadGame(const std::string& filename);
 
 private:
     bool m_gameOver = false;

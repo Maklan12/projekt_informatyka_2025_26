@@ -30,6 +30,8 @@ public:
     float getVX() const {return vx;}
     float getVY() const {return vy;}
     float getRadius() const {return radius;}
+
+    void setPilka(float setX, float setY, float setVX, float setVY);
 };
 
 #endif

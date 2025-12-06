@@ -31,7 +31,7 @@ void Game::update(sf::Time dt)
     m_pilka.move();
     m_pilka.collideWalls(WIDTH, HEIGHT);
 
-    for (int k = 0; k < ILOSC_WIERSZY * ILOSC_KOLUMN; k++)
+    for (int k = 0; k < m_bloki.size(); k++)
     {
         m_pilka.collideStone(m_bloki[k]);
     }
@@ -65,7 +65,7 @@ void Game::update(sf::Time dt)
 
 void Game::render(sf::RenderTarget& target)
 {
-    for (int l = 0; l < ILOSC_WIERSZY * ILOSC_KOLUMN; l++)
+    for (int l = 0; l < m_bloki.size(); l++)
     {
         target.draw(m_bloki[l]);
     }
@@ -100,4 +100,26 @@ void Game::resetGame()
         posY = 2.f + posY + ROZMIAR_BLOKU_Y;
         posX = 2.f;
     }
+}
+
+void Game::saveGame(const std::string& filename)
+{
+    GameState gs;
+    gs.capture(m_paletka, m_pilka, m_bloki);
+    if(gs.saveToFile(filename)) {
+        std::cout << "Gra zapisana!" << std::endl;
+    } else {
+        std::cout << "Blad zapisu gry!" << std::endl;
+    }
+}
+
+bool Game::loadGame(const std::string& filename)
+{
+    GameState gs;
+    if (gs.loadFromFile(filename)) {
+        gs.apply(m_paletka, m_pilka, m_bloki, sf::Vector2f(ROZMIAR_BLOKU_X, ROZMIAR_BLOKU_Y));
+        m_gameOver = false;
+        return true;
+    }
+    return false;
 }

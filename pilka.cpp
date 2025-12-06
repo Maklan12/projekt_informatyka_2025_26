@@ -88,3 +88,12 @@ void Pilka::draw(sf::RenderTarget& target)
 {
     target.draw(shape);
 }
+
+void Pilka::setPilka(float setX, float setY, float setVX, float setVY)
+{
+    x = setX;
+    y = setY;
+    vx = setVX;
+    vy = setVY;
+    shape.setPosition({x, y});
+}

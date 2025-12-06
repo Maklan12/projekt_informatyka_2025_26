@@ -3,7 +3,7 @@
 #include "Menu.cpp"
 #include "Game.cpp"
 
-enum class GameState { Menu, Playing, Scores, Exiting };
+enum class StanGry { Menu, Playing, Scores, Exiting };
 
 // Funkcja opóźniająca
 void myDelay(int opoznienie)
@@ -31,7 +31,7 @@ int main()
     
     Menu menu(window.getSize().x, window.getSize().y);
     Game game;
-    GameState currentState = GameState::Menu;
+    StanGry currentState = StanGry::Menu;
     sf::Clock deltaClock;
 
     while (window.isOpen())
@@ -46,14 +46,19 @@ int main()
             {
                 if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
                 {
-                    if (currentState == GameState::Playing)
+                    if (currentState == StanGry::Playing)
                     {
-                        currentState = GameState::Menu;
+                        currentState = StanGry::Menu;
                         game.resetGame();
                     }
                 }
                 
-                if (currentState == GameState::Menu)
+                if (currentState == StanGry::Playing && keyPressed->scancode == sf::Keyboard::Scancode::F5)
+                {
+                    game.saveGame("savegame.txt");
+                }
+
+                if (currentState == StanGry::Menu)
                 {
                     if (keyPressed->scancode == sf::Keyboard::Scancode::Up)
                     {
@@ -72,16 +77,25 @@ int main()
                         switch (menu.getSelectedItem())
                         {
                             case 0: // Nowa gra
-                                currentState = GameState::Playing;
+                                currentState = StanGry::Playing;
                                 game.resetGame();
                                 std::cout << "Uruchamiam gre..." << std::endl;
                                 break;
-                            case 1: // Ostatnie wyniki
-                                currentState = GameState::Scores;
+                            case 1: // Wczytaj grę (NOWE) [cite: 223]
+                                std::cout << "Wczytuje gre..." << std::endl;
+                                if (game.loadGame("savegame.txt")) {
+                                    currentState = StanGry::Playing;
+                                    std::cout << "Gra wczytana!" << std::endl;
+                                } else {
+                                    std::cout << "Blad wczytywania! (Brak pliku?)" << std::endl;
+                                }
+                                break;
+                            case 2: // Ostatnie wyniki
+                                currentState = StanGry::Scores;
                                 std::cout << "Najlepsze wyniki..." << std::endl;
                                 break;
-                            case 2: // Wyjście
-                                currentState = GameState::Exiting;
+                            case 3: // Wyjście
+                                currentState = StanGry::Exiting;
                                 window.close();
                                 break;
                         }
@@ -90,14 +104,14 @@ int main()
             }
         }
 
-        if (currentState == GameState::Playing)
+        if (currentState == StanGry::Playing)
         {
             sf::Time deltaTime = deltaClock.restart();
             game.update(deltaTime);
             
             if (game.isGameOver())
             {
-                currentState = GameState::Menu;
+                currentState = StanGry::Menu;
                 game.resetGame();
             }
         }
@@ -106,16 +120,16 @@ int main()
 
         switch (currentState)
         {
-            case GameState::Menu:
+            case StanGry::Menu:
                 menu.draw(window);
                 break;
-            case GameState::Playing:
+            case StanGry::Playing:
                 game.render(window);
                 break;
-            case GameState::Scores:
+            case StanGry::Scores:
                 menu.draw(window); 
                 break;
-            case GameState::Exiting:
+            case StanGry::Exiting:
                 break;
         }
 

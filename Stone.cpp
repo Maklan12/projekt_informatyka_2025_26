@@ -23,15 +23,23 @@ void Stone::trafienie()
     {
         return;
     }
+
     m_punktyZycia= m_punktyZycia - 1;
-    aktualizujKolor();
+
     if (m_punktyZycia <= 0)
     {
         m_jestZniszczony = true;
     }
+    
+    aktualizujKolor();
 }
 
 void Stone::aktualizujKolor()
 {
     Stone::RectangleShape::setFillColor(m_colorLUT[m_punktyZycia]);
+    if (m_jestZniszczony == true)
+    {
+        Stone::RectangleShape::setOutlineColor(sf::Color::Transparent);
+    }
+    
 }

@@ -45,3 +45,10 @@ void Paletka::draw(sf::RenderTarget& target)
 {
     target.draw(shape);
 }
+
+void Paletka::setPosition(float setX, float setY)
+{
+    x = setX;
+    y = setY;
+    shape.setPosition({x, y});
+}
