@@ -9,6 +9,8 @@
 #include "Paletka.h"
 #include "Pilka.h"
 #include "Stone.h"
+#include "wynik.h"
+
 
 struct BlockData {
     float x, y;
@@ -17,6 +19,7 @@ struct BlockData {
 
 class GameState {
 private:
+    int saved_score;
     sf::Vector2f paddlePosition;
     sf::Vector2f ballPosition;
     sf::Vector2f ballVelocity;
@@ -24,11 +27,12 @@ private:
 
 public:
     // Zadanie 1: Capture [cite: 162]
-    void capture(const Paletka& p, const Pilka& b, const std::vector<Stone>& stones) {
+    void capture(const Paletka& p, const Pilka& b, const std::vector<Stone>& stones, const wynik& currentscore) {
         paddlePosition = {p.getX(), p.getY()};
         ballPosition = {b.getX(), b.getY()};
         ballVelocity = {b.getVX(), b.getVY()};
-        
+        saved_score = currentscore.GetScore();
+
         blocks.clear();
         for (const auto& stone : stones) 
         {
@@ -43,6 +47,7 @@ public:
         std::ofstream file(filename);
         if (!file.is_open()) return false;
 
+        file << "SCORE " << saved_score << "\n";
         file << "PADDLE " << paddlePosition.x << " " << paddlePosition.y << "\n";
         file << "BALL " << ballPosition.x << " " << ballPosition.y << " " << ballVelocity.x << " " << ballVelocity.y << "\n";
         file << "BLOCKS_COUNT " << blocks.size() << "\n";
@@ -61,6 +66,8 @@ public:
 
         std::string label;
         
+        if (!(file >> label >> saved_score)) return false;  
+
         if (!(file >> label >> paddlePosition.x >> paddlePosition.y)) return false;
 
         
@@ -83,11 +90,13 @@ public:
     }
 
 
-    void apply(Paletka& p, Pilka& b, std::vector<Stone>& stones, sf::Vector2f blockSize) {
+    void apply(Paletka& p, Pilka& b, std::vector<Stone>& stones, sf::Vector2f blockSize, wynik& score) {
         p.setPosition(paddlePosition.x, paddlePosition.y);
         
         b.setPilka(ballPosition.x, ballPosition.y, ballVelocity.x, ballVelocity.y);
         
+        score.SetScore(saved_score);
+
         stones.clear();
         for (const auto& data : blocks) 
         {

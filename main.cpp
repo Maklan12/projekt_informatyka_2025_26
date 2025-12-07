@@ -81,7 +81,7 @@ int main()
                                 game.resetGame();
                                 std::cout << "Uruchamiam gre..." << std::endl;
                                 break;
-                            case 1: // Wczytaj grę (NOWE) [cite: 223]
+                            case 1: // Wczytaj grę (NOWE)
                                 std::cout << "Wczytuje gre..." << std::endl;
                                 if (game.loadGame("savegame.txt")) {
                                     currentState = StanGry::Playing;

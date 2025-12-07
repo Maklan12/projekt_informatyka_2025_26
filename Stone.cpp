@@ -32,6 +32,7 @@ void Stone::trafienie()
     }
     
     aktualizujKolor();
+    
 }
 
 void Stone::aktualizujKolor()

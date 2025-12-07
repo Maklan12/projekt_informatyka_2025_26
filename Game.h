@@ -6,6 +6,9 @@
 #include "Paletka.cpp"
 #include "Stone.cpp"
 #include "GameState.h"
+
+#include "wynik.h"
+
 #include <vector>
 
 class Game
@@ -13,6 +16,7 @@ class Game
 private:
     Paletka m_paletka;
     Pilka m_pilka;
+    wynik m_score;
     std::vector<Stone> m_bloki;
     sf::Clock m_deltaClock;
     

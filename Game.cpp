@@ -4,6 +4,7 @@
 Game::Game() 
     : m_paletka(320.f, 440.f, 100.f, 20.f, 8.f)
     , m_pilka(320.f, 300.f, 4.f, 3.f, 8.f)
+    , m_score()
     , ROZMIAR_BLOKU_X((WIDTH - (ILOSC_KOLUMN - 1) * 2.f) / ILOSC_KOLUMN)
 {
     float posX = 2.f;
@@ -34,6 +35,13 @@ void Game::update(sf::Time dt)
     for (int k = 0; k < m_bloki.size(); k++)
     {
         m_pilka.collideStone(m_bloki[k]);
+
+        if (m_bloki[k].isDestroyed() == true)
+        {
+            m_bloki.erase(m_bloki.begin() + k);
+            m_score.wynik_update();
+        }
+        
     }
     
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) { 
@@ -72,6 +80,7 @@ void Game::render(sf::RenderTarget& target)
 
     m_paletka.draw(target);
     m_pilka.draw(target);
+    m_score.draw(target);
 }
 
 void Game::resetGame()
@@ -79,7 +88,7 @@ void Game::resetGame()
     m_gameOver = false;
     m_pilka = Pilka(320.f, 300.f, 4.f, 3.f, 8.f);
     m_paletka = Paletka(320.f, 440.f, 100.f, 20.f, 8.f);
-    
+    m_score.SetScore(0);
 
     
     m_bloki.clear(); 
@@ -105,7 +114,7 @@ void Game::resetGame()
 void Game::saveGame(const std::string& filename)
 {
     GameState gs;
-    gs.capture(m_paletka, m_pilka, m_bloki);
+    gs.capture(m_paletka, m_pilka, m_bloki, m_score);
     if(gs.saveToFile(filename)) {
         std::cout << "Gra zapisana!" << std::endl;
     } else {
@@ -117,7 +126,7 @@ bool Game::loadGame(const std::string& filename)
 {
     GameState gs;
     if (gs.loadFromFile(filename)) {
-        gs.apply(m_paletka, m_pilka, m_bloki, sf::Vector2f(ROZMIAR_BLOKU_X, ROZMIAR_BLOKU_Y));
+        gs.apply(m_paletka, m_pilka, m_bloki, sf::Vector2f(ROZMIAR_BLOKU_X, ROZMIAR_BLOKU_Y), m_score);
         m_gameOver = false;
         return true;
     }
