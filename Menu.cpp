@@ -24,14 +24,8 @@ Menu::Menu(float width, float height)
     menu.push_back(t);
     
     t.setFillColor(sf::Color::White);
-    t.setStyle(sf::Text::Regular);
-    t.setString("Ostatnie wyniki");
-    t.setPosition(sf::Vector2f(width / 3, height / (MAX_LICZBA_POZIOMOW + 1) * 3));
-    menu.push_back(t);
-    
-    t.setFillColor(sf::Color::White);
     t.setString("Wyjscie");
-    t.setPosition(sf::Vector2f(width / 3, height / (MAX_LICZBA_POZIOMOW + 1) * 4));
+    t.setPosition(sf::Vector2f(width / 3, height / (MAX_LICZBA_POZIOMOW + 1) * 3));
     menu.push_back(t);
 }
 

@@ -5,9 +5,8 @@
 #include "Pilka.cpp"
 #include "Paletka.cpp"
 #include "Stone.cpp"
-#include "GameState.h"
-
-#include "wynik.h"
+#include "GameState.cpp"
+#include "Wynik.cpp"
 
 #include <vector>
 
@@ -20,7 +19,7 @@ private:
     std::vector<Stone> m_bloki;
     sf::Clock m_deltaClock;
     
-    // Stałe
+
     const float WIDTH = 640.f;
     const float HEIGHT = 480.f;
     const int ILOSC_KOLUMN = 6;

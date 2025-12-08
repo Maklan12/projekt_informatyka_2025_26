@@ -5,7 +5,6 @@
 
 enum class StanGry { Menu, Playing, Scores, Exiting };
 
-// Funkcja opóźniająca
 void myDelay(int opoznienie)
 {
     sf::Clock zegar;
@@ -76,12 +75,12 @@ int main()
                     {
                         switch (menu.getSelectedItem())
                         {
-                            case 0: // Nowa gra
+                            case 0:
                                 currentState = StanGry::Playing;
                                 game.resetGame();
                                 std::cout << "Uruchamiam gre..." << std::endl;
                                 break;
-                            case 1: // Wczytaj grę (NOWE)
+                            case 1:
                                 std::cout << "Wczytuje gre..." << std::endl;
                                 if (game.loadGame("savegame.txt")) {
                                     currentState = StanGry::Playing;
@@ -90,11 +89,7 @@ int main()
                                     std::cout << "Blad wczytywania! (Brak pliku?)" << std::endl;
                                 }
                                 break;
-                            case 2: // Ostatnie wyniki
-                                currentState = StanGry::Scores;
-                                std::cout << "Najlepsze wyniki..." << std::endl;
-                                break;
-                            case 3: // Wyjście
+                            case 2: 
                                 currentState = StanGry::Exiting;
                                 window.close();
                                 break;
